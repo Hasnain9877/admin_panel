@@ -17,7 +17,7 @@ class DriverCard extends StatelessWidget {
           cardWidth = 600;
         } else {
           // Desktop
-          cardWidth = 200;
+          cardWidth = 100;
         }
 
         return Center(
@@ -25,43 +25,70 @@ class DriverCard extends StatelessWidget {
             width: cardWidth,
             padding: const EdgeInsets.all(12),
             margin: const EdgeInsets.symmetric(vertical: 6),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(bottom: BorderSide(color: Colors.grey.shade300)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+
+            child: Row(
+             // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Top Row
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
                   children: [
                     const CircleAvatar(
-                      backgroundImage: NetworkImage('https://i.pravatar.cc/100'),
+                      backgroundImage: NetworkImage(
+                        'https://i.pravatar.cc/100',
+                      ),
                       radius: 20,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.green.shade100,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Text(
-                        'Available',
-                        style: TextStyle(color: Colors.green, fontSize: 12),
-                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                // Info Row
-                Row(
+                SizedBox(width: 8,),
+                Expanded(
+                  child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    IconText(icon: Icons.car_rental, label: 'SUV'),
-                    IconText(icon: Icons.location_on_outlined, label: 'DownTown'),
-                    IconText(icon: Icons.star, label: '4.8'),
-                  ],
+
+                    children: [
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'John Doe',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        //  SizedBox(width: 80,),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.green.shade100,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Text(
+                              'Available',
+                              style: TextStyle(color: Colors.green, fontSize: 12),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          IconText(icon: Icons.car_rental, label: 'SUV'),
+                          SizedBox(width: 8,),
+                          IconText(
+                            icon: Icons.location_on_outlined,
+                            label: 'DownTown',
+                          ),
+                          SizedBox(width: 8,),
+                          IconText(icon: Icons.star, label: '4.8'),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -75,6 +102,7 @@ class DriverCard extends StatelessWidget {
 class IconText extends StatelessWidget {
   final IconData icon;
   final String label;
+
   const IconText({required this.icon, required this.label});
 
   @override
@@ -88,3 +116,44 @@ class IconText extends StatelessWidget {
     );
   }
 }
+
+// Column(
+// // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// children: [
+// const CircleAvatar(
+// backgroundImage: NetworkImage('https://i.pravatar.cc/100'),
+// radius: 20,
+// ),
+//
+// ],
+// ),
+// //const SizedBox(height: 8),
+// Row(
+// children: [
+// const Text(
+// 'John Doe',
+// style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+// ),
+// const Spacer(),
+// Container(
+// padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+// decoration: BoxDecoration(
+// color: Colors.green.shade100,
+// borderRadius: BorderRadius.circular(10),
+// ),
+// child: const Text(
+// 'Available',
+// style: TextStyle(color: Colors.green, fontSize: 12),
+// ),
+// ),
+// ],
+// ),
+// // Info Row
+// Row(
+// mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// children: const [
+// IconText(icon: Icons.car_rental, label: 'SUV'),
+// IconText(icon: Icons.location_on_outlined, label: 'DownTown'),
+// IconText(icon: Icons.star, label: '4.8'),
+// ],
+// ),

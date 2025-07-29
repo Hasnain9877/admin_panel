@@ -1,10 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../common_widgets/app_button.dart';
 import '../../common_widgets/custom_textfield.dart';
 import '../../constants/app_colors.dart';
 import '../widgets/driver_card.dart';
-import '../widgets/tab_bar_widget.dart';
 
 class AssignmentScreen extends StatefulWidget {
   const AssignmentScreen({super.key});
@@ -30,15 +29,19 @@ class _AssignmentScreenState extends State<AssignmentScreen> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
+    bool isWide = MediaQuery.of(context).size.width > 800;
+
     return Row(
       children: [
+        // 👈 Left Panel
         Expanded(
           flex: 2,
           child: Column(
             children: [
+              // Top Tab Bar
               TabBar(
-                indicatorColor: AppColors.kPrimaryColor,
                 controller: _tabController,
+                indicatorColor: AppColors.kPrimaryColor,
                 labelColor: AppColors.kPrimaryColor,
                 unselectedLabelColor: Colors.black,
                 tabs: const [
@@ -47,35 +50,72 @@ class _AssignmentScreenState extends State<AssignmentScreen> with SingleTickerPr
                 ],
               ),
 
-              CustomTextFormField(
-                hintText: 'Search Drivers',
-                prefixIcon: Icons.search,
-
-                onChanged: (value) {
-                  // Handle search logic here
-                },
-              ),
+              // Search + Content Scrollable Area
               Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: const [
-                    DriverList(),
-                    Center(child: Text("Auto Assignment Placeholder")),
-                  ],
+                child: Scrollbar(
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          // Search Field
+                          CustomTextFormField(
+                            hintText: 'Search Drivers',
+                            prefixIcon: Icons.search,
+                            onChanged: (value) {},
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          // Tab Content
+                          SizedBox(
+                            height: 400, // 👈 required to prevent unbounded height
+                            child: TabBarView(
+                              controller: _tabController,
+                              children: const [
+                                DriverList(),
+                                Center(child: Text("Auto Assignment Placeholder")),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          // Filter Button
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              'Select Filter',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+
+                          const SizedBox(height: 30),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Total Drivers'),
+                              Text('Available'),
+                              Text('Pending Tasks')
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
-
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue
-                  ),
-
-                  onPressed: (){}, child: Text('Select Filter', style: TextStyle(color: Colors.white),)),
-              const SizedBox(height: 30),
             ],
           ),
         ),
-        if (MediaQuery.of(context).size.width > 800)
+
+        // 👈 Right Panel (Map)
+        if (isWide)
           Expanded(
             flex: 3,
             child: Container(
@@ -89,8 +129,6 @@ class _AssignmentScreenState extends State<AssignmentScreen> with SingleTickerPr
   }
 }
 
-
-
 class DriverList extends StatelessWidget {
   const DriverList({super.key});
 
@@ -103,7 +141,6 @@ class DriverList extends StatelessWidget {
       separatorBuilder: (_, __) => const Divider(
         color: Colors.grey,
         thickness: 0.5,
-
       ),
     );
   }

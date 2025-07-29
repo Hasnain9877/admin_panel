@@ -1,8 +1,7 @@
-import 'package:admin_panel/common_widgets/side_bar.dart';
-import 'package:admin_panel/common_widgets/top_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../common_widgets/side_bar.dart';
+import '../common_widgets/top_bar.dart';
 import '../presentation/assignment/assignment_screen.dart';
 
 class ResponsiveScaffold extends StatefulWidget {
@@ -29,17 +28,49 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
   @override
   Widget build(BuildContext context) {
     bool isDesktop = MediaQuery.of(context).size.width > 800;
+
     return Scaffold(
-      drawer: isDesktop ? null : Drawer(child: Sidebar(onItemSelected: _onItemSelected, selectedIndex: selectedIndex)),
+      drawer: isDesktop ? null : Drawer(
+        child: Sidebar(
+          onItemSelected: _onItemSelected,
+          selectedIndex: selectedIndex,
+        ),
+      ),
       body: Row(
         children: [
           if (isDesktop)
-            Sidebar(onItemSelected: _onItemSelected, selectedIndex: selectedIndex),
+            Sidebar(
+              onItemSelected: _onItemSelected,
+              selectedIndex: selectedIndex,
+            ),
           Expanded(
             child: Column(
               children: [
                 TopBar(title: pages[selectedIndex]),
-                Expanded(child: getScreenContent(pages[selectedIndex]))
+
+                /// 👇 THIS IS THE FIX: scrollable + flexible content
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Scrollbar(
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: constraints.maxHeight,
+                            ),
+                            child: IntrinsicHeight(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: getScreenContent(pages[selectedIndex]),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -56,7 +87,9 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
   }
 
   Widget getScreenContent(String title) {
-    if (title == 'Assignments') return  AssignmentScreen();
-    return Center(child: Text('$title Page', style: const TextStyle(fontSize: 24)));
+    if (title == 'Assignments') return const AssignmentScreen();
+    return Center(
+      child: Text('$title Page', style: const TextStyle(fontSize: 24)),
+    );
   }
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../common_widgets/app_button.dart';
 import '../../common_widgets/custom_textfield.dart';
 import '../../constants/app_colors.dart';
 import '../widgets/driver_card.dart';
-import '../widgets/tab_bar_widget.dart';
 
 class AssignmentScreen extends StatefulWidget {
   const AssignmentScreen({super.key});
@@ -13,7 +11,8 @@ class AssignmentScreen extends StatefulWidget {
   State<AssignmentScreen> createState() => _AssignmentScreenState();
 }
 
-class _AssignmentScreenState extends State<AssignmentScreen> with SingleTickerProviderStateMixin {
+class _AssignmentScreenState extends State<AssignmentScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -66,11 +65,14 @@ class _AssignmentScreenState extends State<AssignmentScreen> with SingleTickerPr
               ),
 
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue
-                  ),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
 
-                  onPressed: (){}, child: Text('Select Filter', style: TextStyle(color: Colors.white),)),
+                onPressed: () {},
+                child: Text(
+                  'Select Filter',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
               const SizedBox(height: 30),
             ],
           ),
@@ -89,8 +91,6 @@ class _AssignmentScreenState extends State<AssignmentScreen> with SingleTickerPr
   }
 }
 
-
-
 class DriverList extends StatelessWidget {
   const DriverList({super.key});
 
@@ -100,11 +100,8 @@ class DriverList extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       itemCount: 5,
       itemBuilder: (_, i) => const DriverCard(),
-      separatorBuilder: (_, __) => const Divider(
-        color: Colors.grey,
-        thickness: 0.5,
-
-      ),
+      separatorBuilder: (_, __) =>
+          const Divider(color: Colors.grey, thickness: 0.5),
     );
   }
 }

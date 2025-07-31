@@ -1,6 +1,7 @@
 import 'package:admin_panel/common_widgets/side_bar.dart';
 import 'package:admin_panel/common_widgets/top_bar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:admin_panel/presentation/Screens/driver.dart';
+import 'package:admin_panel/presentation/Screens/shift.dart';
 import 'package:flutter/material.dart';
 
 import '../presentation/assignment/assignment_screen.dart';
@@ -30,16 +31,26 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
   Widget build(BuildContext context) {
     bool isDesktop = MediaQuery.of(context).size.width > 800;
     return Scaffold(
-      drawer: isDesktop ? null : Drawer(child: Sidebar(onItemSelected: _onItemSelected, selectedIndex: selectedIndex)),
+      drawer: isDesktop
+          ? null
+          : Drawer(
+              child: Sidebar(
+                onItemSelected: _onItemSelected,
+                selectedIndex: selectedIndex,
+              ),
+            ),
       body: Row(
         children: [
           if (isDesktop)
-            Sidebar(onItemSelected: _onItemSelected, selectedIndex: selectedIndex),
+            Sidebar(
+              onItemSelected: _onItemSelected,
+              selectedIndex: selectedIndex,
+            ),
           Expanded(
             child: Column(
               children: [
                 TopBar(title: pages[selectedIndex]),
-                Expanded(child: getScreenContent(pages[selectedIndex]))
+                Expanded(child: getScreenContent(pages[selectedIndex])),
               ],
             ),
           ),
@@ -56,7 +67,11 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
   }
 
   Widget getScreenContent(String title) {
-    if (title == 'Assignments') return  AssignmentScreen();
-    return Center(child: Text('$title Page', style: const TextStyle(fontSize: 24)));
+    if (title == 'Assignments') return AssignmentScreen();
+    if (title == 'Drivers') return DriverDashboard();
+    if (title == 'Shifts') return ShiftTabBarScreen();
+    return Center(
+      child: Text('$title Page', style: const TextStyle(fontSize: 24)),
+    );
   }
 }

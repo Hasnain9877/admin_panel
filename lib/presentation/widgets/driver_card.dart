@@ -37,11 +37,16 @@ class DriverCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const CircleAvatar(
-                      backgroundImage: NetworkImage('https://i.pravatar.cc/100'),
+                      backgroundImage: NetworkImage(
+                        'https://i.pravatar.cc/100',
+                      ),
                       radius: 20,
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.green.shade100,
                         borderRadius: BorderRadius.circular(10),
@@ -59,7 +64,10 @@ class DriverCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
                     IconText(icon: Icons.car_rental, label: 'SUV'),
-                    IconText(icon: Icons.location_on_outlined, label: 'DownTown'),
+                    IconText(
+                      icon: Icons.location_on_outlined,
+                      label: 'DownTown',
+                    ),
                     IconText(icon: Icons.star, label: '4.8'),
                   ],
                 ),
@@ -75,7 +83,7 @@ class DriverCard extends StatelessWidget {
 class IconText extends StatelessWidget {
   final IconData icon;
   final String label;
-  const IconText({required this.icon, required this.label});
+  const IconText({super.key, required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {

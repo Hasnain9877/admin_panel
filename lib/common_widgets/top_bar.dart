@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget {
@@ -14,8 +13,13 @@ class TopBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const CircleAvatar(backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=3')),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const CircleAvatar(
+            backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=3'),
+          ),
         ],
       ),
     );

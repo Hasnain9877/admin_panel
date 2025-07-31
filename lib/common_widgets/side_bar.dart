@@ -1,11 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Sidebar extends StatelessWidget {
   final ValueChanged<int> onItemSelected;
   final int selectedIndex;
 
-  const Sidebar({super.key, required this.onItemSelected, required this.selectedIndex});
+  const Sidebar({
+    super.key,
+    required this.onItemSelected,
+    required this.selectedIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class Sidebar extends StatelessWidget {
       Icons.gps_fixed,
       Icons.chat,
       Icons.access_time,
-      Icons.settings
+      Icons.settings,
     ];
     final labels = [
       'Assignments',
@@ -27,7 +30,7 @@ class Sidebar extends StatelessWidget {
       'Live Tracking',
       'Chats',
       'Shifts',
-      'Settings'
+      'Settings',
     ];
 
     return Container(
@@ -38,7 +41,10 @@ class Sidebar extends StatelessWidget {
           const SizedBox(height: 40),
           for (int i = 0; i < labels.length; i++)
             ListTile(
-              leading: Icon(items[i], color: selectedIndex == i ? Colors.blue : Colors.black),
+              leading: Icon(
+                items[i],
+                color: selectedIndex == i ? Colors.blue : Colors.black,
+              ),
               title: Text(labels[i]),
               selected: selectedIndex == i,
               selectedTileColor: Colors.blue.shade100,

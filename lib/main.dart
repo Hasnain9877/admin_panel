@@ -1,6 +1,6 @@
+import 'package:admin_panel/common_widgets/resposive_scafold.dart';
+import 'package:admin_panel/presentation/Screens/driver.dart';
 import 'package:flutter/material.dart';
-
-import 'common_widgets/resposive_scafold.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,8 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home:  ResponsiveScaffold(),
+      home: ResponsiveScaffold(),
     );
   }
 }
-

@@ -1,107 +1,97 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
 
-import '../constants/app_colors.dart';
+enum ButtonSize { small, medium, large }
 
-class AppAsyncLoadingButton extends StatelessWidget {
-  final String? title;
+class AppAsyncLoadingButton extends StatefulWidget {
+  final Future<void> Function() onPressed;
+  final String title;
+  final Color? color; // background color
+  final Color? textColor;
   final double? width;
-  final double? height;
-  final VoidCallback? onTap;
-  final Widget? child;
-  final RxBool? isLoading;
-  final BorderRadius? borderRadius;
-  final Color? bgColor;
-  final Color? textColorreq;
+  final double? borderRadius;
+  final ButtonSize size;
+  final IconData? icon; // optional icon
 
-  AppAsyncLoadingButton({
+  const AppAsyncLoadingButton({
     super.key,
-    this.title,
+    required this.onPressed,
+    required this.title,
+    this.color,
+    this.textColor,
     this.width,
-    this.height,
-    this.onTap,
-    this.child,
     this.borderRadius,
-    RxBool? isLoading, this.bgColor,  this.textColorreq,
-  }) : isLoading = isLoading ?? false.obs;
+    this.size = ButtonSize.medium,
+    this.icon,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
-    //final Color bgColor = AppColors.kPrimaryColor;
-    final Color textColor = isDark ? Colors.black : Colors.white;
-
-    return Obx(() {
-      final loading = isLoading?.value ?? false;
-
-      return SizedBox(
-        width: width ?? double.infinity,
-        height: height ?? 52,
-        child: ElevatedButton(
-          onPressed: loading ? null : onTap,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.kPrimaryColor,
-           foregroundColor: AppColors.kPrimaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius:borderRadius ?? BorderRadius.circular(12),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          ),
-          child: loading
-              ? SpinKitThreeBounce(
-                  color: textColor,
-                  size: 20,
-                )
-              : child ??
-                  Text(
-                    title ?? 'Save',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: textColorreq ?? textColor,
-                    ),
-                  ),
-        ),
-      );
-    });
-  }
+  State<AppAsyncLoadingButton> createState() => _AppAsyncLoadingButtonState();
 }
 
-class AppBackOutlineButton extends StatelessWidget {
-  final VoidCallback? onTap;
-  const AppBackOutlineButton({super.key, this.onTap});
+class _AppAsyncLoadingButtonState extends State<AppAsyncLoadingButton> {
+  bool _isLoading = false;
+
+  double get _height {
+    switch (widget.size) {
+      case ButtonSize.small:
+        return 36;
+      case ButtonSize.medium:
+        return 45;
+      case ButtonSize.large:
+        return 55;
+    }
+  }
+
+  Future<void> _handlePress() async {
+    if (_isLoading) return;
+    setState(() => _isLoading = true);
+    try {
+      await widget.onPressed();
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
-    final Color borderColor = isDark ? Colors.white54 : Colors.black26;
-    final Color textColor = isDark ? Colors.white70 : const Color(0xFF1D3557);
+    final bgColor = widget.color ?? Colors.blue;
+    final txtColor = widget.textColor ?? Colors.white;
 
     return SizedBox(
-      height: 52,
-      width: double.infinity,
-      child: OutlinedButton(
-        onPressed: onTap ?? () => Get.back(),
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(color: borderColor, width: 1.2),
+      width: widget.width ?? double.infinity,
+      height: _height,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: bgColor,
+          foregroundColor: txtColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          foregroundColor: textColor,
-        ),
-        child: Text(
-          'Back',
-          style: TextStyle(
-            color: textColor,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+            borderRadius: BorderRadius.circular(widget.borderRadius ?? 12),
           ),
         ),
+        onPressed: _handlePress,
+        child: _isLoading
+            ? SizedBox(
+                height: _height / 2,
+                width: _height / 2,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(txtColor),
+                  strokeWidth: 2,
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (widget.icon != null) ...[
+                    Icon(widget.icon, color: txtColor, size: 18),
+                    const SizedBox(width: 6),
+                  ],
+                  Text(
+                    widget.title,
+                    style: TextStyle(color: txtColor, fontSize: 15),
+                  ),
+                ],
+              ),
       ),
     );
   }

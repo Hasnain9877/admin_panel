@@ -69,7 +69,7 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
   Widget getScreenContent(String title) {
     if (title == 'Assignments') return AssignmentScreen();
     if (title == 'Drivers') return DriverDashboard();
-    if (title == 'Shifts') return ShiftTabBarScreen();
+    if (title == 'Shifts') return ShiftStatsScreen();
     return Center(
       child: Text('$title Page', style: const TextStyle(fontSize: 24)),
     );

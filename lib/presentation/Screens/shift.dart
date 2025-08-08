@@ -1,211 +1,365 @@
+import 'package:admin_panel/common_widgets/app_button.dart';
 import 'package:flutter/material.dart';
 
-class ShiftTabBarScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> shifts = [
-    {
-      'title': 'Morning Shift - Al Barsha Zone',
-      'time': '5:00 AM - 10:00 AM',
-      'date': 'Today',
-      'status': 'Active',
-      'supervisor': 'Ahmed E.',
-      'drivers': 12,
-      'label': 'Active',
-      'labelColor': Colors.green,
-    },
-    {
-      'title': 'Evening Shift - Dubai Marina',
-      'time': '5:00 PM - 11:00 PM',
-      'date': 'Today',
-      'status': 'Active',
-      'supervisor': 'Sana M.',
-      'drivers': 6,
-      'label': 'Active',
-      'labelColor': Colors.green,
-    },
-    {
-      'title': 'Night Shift - Business Bay',
-      'time': '11:00 PM - 4:00 AM',
-      'date': 'Today',
-      'status': 'Active',
-      'supervisor': 'John S.',
-      'drivers': 10,
-      'label': 'Active',
-      'labelColor': Colors.green,
-    },
-  ];
-
-  ShiftTabBarScreen({super.key});
+class ShiftStatsScreen extends StatelessWidget {
+  const ShiftStatsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
+      initialIndex: 1,
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          title: const Text('Shifts', style: TextStyle(color: Colors.black)),
-          iconTheme: const IconThemeData(color: Colors.black),
-          actions: [
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(1),
-                ),
-                side: const BorderSide(color: Colors.deepPurple),
-              ),
-              child: const Text(
-                "Quick Actions",
-                style: TextStyle(color: Colors.deepPurple),
-              ),
-            ),
-            // TextButton(
-            //   onPressed: null,
-            //   child: Text(
-            //     "Quick Actions",
-            //     style: TextStyle(color: Colors.deepPurple),
-            //   ),
-            // ),
-            CircleAvatar(child: Text("A")),
-            SizedBox(width: 16),
-          ],
-          bottom: TabBar(
-            labelColor: Colors.deepPurple,
-            unselectedLabelColor: Colors.black54,
-            indicatorColor: Colors.deepPurple,
-            indicatorWeight: 2.5,
-            labelStyle: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-            ),
-            tabs: const [
-              Tab(text: 'Upcoming'),
-              Tab(text: 'Active'),
-              Tab(text: 'Completed'),
-            ],
-          ),
-        ),
-        body: TabBarView(
+        body: Column(
           children: [
-            const ShiftMessage(message: 'Wait for upcoming shifts.'),
-            ShiftList(shifts: shifts, filter: 'Active'),
-            const ShiftMessage(message: 'Wait for completed shifts.'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ShiftList extends StatelessWidget {
-  final List<Map<String, dynamic>> shifts;
-  final String filter;
-
-  const ShiftList({super.key, required this.shifts, required this.filter});
-
-  @override
-  Widget build(BuildContext context) {
-    final filteredShifts = shifts
-        .where((shift) => shift['status'] == filter)
-        .toList();
-
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: filteredShifts.map((shift) {
-          return Card(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            // 🔍 Search + Create Shift Button Row (TOP)
+            // 🔍 Search + Create Shift Button Row (TOP)
+            // 🔍 Search + Create Shift Button Row (TOP)
+            // 🔍 Search + Create Shift Button Row (TOP)
+            // 🔍 Search + Create Shift Button Row (TOP)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // LEFT SIDE → Search + Create Shift
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        shift['title'],
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                      SizedBox(
+                        height: 48,
+                        width: 200,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: "Search Shift",
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: Colors.deepPurple,
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 0,
+                              horizontal: 12,
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey.shade100,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                color: Colors.grey.shade300,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                color: Colors.grey.shade300,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: shift['labelColor'].withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          shift['label'],
-                          style: TextStyle(color: shift['labelColor']),
+                      const SizedBox(width: 8),
+                      SizedBox(
+                        height: 48,
+                        width: 200,
+                        child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepPurple,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: () {},
+                          icon: const Icon(Icons.add, color: Colors.black),
+                          label: const Text(
+                            "Create Shift",
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
-                  Text('${shift['time']} • ${shift['date']}'),
-                  Text('Supervisor: ${shift['supervisor']}'),
-                  const SizedBox(height: 10),
-                  Row(
+
+                  // RIGHT SIDE → Auto Assign + Import CSV
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.people, size: 20),
-                      const SizedBox(width: 4),
-                      Text('${shift['drivers']} Drivers Assigned'),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.blue,
+                      // Quick Action button (top)
+                      SizedBox(
+                        height: 40,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            "Quick Action",
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
-                        child: const Text("View Drivers"),
                       ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                        ),
-                        child: const Text("Start Shift"),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.blue,
-                        ),
-                        child: const Text("View Route"),
+                      const SizedBox(height: 8),
+
+                      // Auto Assign + Import CSV (same row)
+                      Row(
+                        children: [
+                          SizedBox(
+                            height: 48,
+                            child: TextButton.icon(
+                              style: TextButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.auto_fix_high,
+                                color: Colors.black,
+                              ),
+                              label: const Text(
+                                "Auto Assign",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          SizedBox(
+                            height: 48,
+                            child: TextButton.icon(
+                              style: TextButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.file_upload,
+                                color: Colors.black,
+                              ),
+                              label: const Text(
+                                "Import CSV",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ],
               ),
+            ), // 📌 TabBar
+            const TabBar(
+              labelColor: Colors.deepPurple,
+              unselectedLabelColor: Colors.grey,
+              indicatorColor: Colors.deepPurple,
+              tabs: [
+                Tab(text: 'Upcoming'),
+                Tab(text: 'Active'),
+                Tab(text: 'Completed'),
+              ],
             ),
-          );
-        }).toList(),
+
+            // 📌 TabBar Content
+            Expanded(
+              child: TabBarView(
+                children: [
+                  const Center(child: Text("Upcoming Shifts")),
+                  buildActiveTab(),
+                  const Center(child: Text("Completed Shifts")),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-}
 
-class ShiftMessage extends StatelessWidget {
-  final String message;
-  const ShiftMessage({super.key, required this.message});
+  static Widget buildActiveTab() {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        buildShiftCard(
+          title: "Morning Shift - Al Barsha Zone",
+          time: "5:00 AM - 10:00 AM",
+          date: "Today",
+          status: "Active",
+          statusColor: Colors.green,
+          driver: "John Doe",
+          supervisor: "Alex Smith",
+        ),
+        buildShiftCard(
+          title: "Evening Shift - Dubai Marina",
+          time: "5:00 PM - 10:00 PM",
+          date: "Today",
+          status: "Upcoming",
+          statusColor: Colors.orange,
+          driver: "David Mark",
+          supervisor: "Sarah Lee",
+        ),
+        buildShiftCard(
+          title: "Night Shift - Business Bay",
+          time: "10:00 PM - 3:00 AM",
+          date: "Today",
+          status: "Completed",
+          statusColor: Colors.red,
+          driver: "Michael Jordan",
+          supervisor: "Laura White",
+        ),
+      ],
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        message,
-        style: const TextStyle(fontSize: 18, color: Colors.grey),
+  static Widget buildShiftCard({
+    required String title,
+    required String time,
+    required String date,
+    required String status,
+    required Color statusColor,
+    required String driver,
+    required String supervisor,
+  }) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title & Status
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: statusColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    status,
+                    style: TextStyle(color: statusColor, fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+
+            // Time & Date Row
+            Row(
+              children: [
+                const Icon(Icons.access_time, size: 16, color: Colors.grey),
+                const SizedBox(width: 4),
+                Text(
+                  time,
+                  style: const TextStyle(color: Colors.grey, fontSize: 14),
+                ),
+                const SizedBox(width: 12),
+                const Icon(Icons.calendar_today, size: 16, color: Colors.grey),
+                const SizedBox(width: 4),
+                Text(
+                  date,
+                  style: const TextStyle(color: Colors.grey, fontSize: 14),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+
+            // Driver & Supervisor Row
+            Row(
+              children: [
+                const Icon(Icons.person, size: 18, color: Colors.deepPurple),
+                const SizedBox(width: 4),
+                Text("Driver: $driver", style: const TextStyle(fontSize: 13)),
+                const SizedBox(width: 16),
+                const Icon(
+                  Icons.supervisor_account,
+                  size: 18,
+                  color: Colors.deepPurple,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  "Supervisor: $supervisor",
+                  style: const TextStyle(fontSize: 13),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+
+            // Buttons Row
+            LayoutBuilder(
+              builder: (context, constraints) {
+                const gap = 8.0;
+                final availableWidth = constraints.maxWidth;
+                final buttonWidth = (availableWidth - gap * 2) / 3;
+
+                return Row(
+                  children: [
+                    SizedBox(
+                      width: buttonWidth,
+                      child: AppAsyncLoadingButton(
+                        title: "View Drivers",
+                        icon: Icons.people,
+                        color: Colors.white,
+                        textColor: Colors.deepPurple,
+                        borderRadius: 8,
+                        size: ButtonSize.small,
+                        onPressed: () async {
+                          await Future.delayed(const Duration(seconds: 1));
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: gap),
+                    SizedBox(
+                      width: buttonWidth,
+                      child: AppAsyncLoadingButton(
+                        title: "Start Shift",
+                        icon: Icons.play_arrow,
+                        color: Colors.deepPurple,
+                        textColor: Colors.white,
+                        borderRadius: 8,
+                        size: ButtonSize.small,
+                        onPressed: () async {
+                          await Future.delayed(const Duration(seconds: 1));
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: gap),
+                    SizedBox(
+                      width: buttonWidth,
+                      child: AppAsyncLoadingButton(
+                        title: "View Route",
+                        icon: Icons.map,
+                        color: Colors.white,
+                        textColor: Colors.deepPurple,
+                        borderRadius: 8,
+                        size: ButtonSize.small,
+                        onPressed: () async {
+                          await Future.delayed(const Duration(seconds: 1));
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

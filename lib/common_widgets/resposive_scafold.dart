@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../common_widgets/side_bar.dart';
 import '../common_widgets/top_bar.dart';
 import '../presentation/assignment/assignment_screen.dart';
+import '../presentation/team_management/team_screen.dart';
 
 class ResponsiveScaffold extends StatefulWidget {
   const ResponsiveScaffold({super.key});
@@ -88,6 +89,7 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
 
   Widget getScreenContent(String title) {
     if (title == 'Assignments') return const AssignmentScreen();
+    if (title == 'Teams') return const TeamManagementScreen ();
     return Center(
       child: Text('$title Page', style: const TextStyle(fontSize: 24)),
     );
